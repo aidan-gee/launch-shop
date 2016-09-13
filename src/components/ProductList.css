@@ -1,0 +1,42 @@
+ul.productList {
+	list-style-type: none;
+	padding:0;
+	margin: 0.5%;
+}
+
+ul.productList li {
+	display: inline-block;
+	margin-right: 0.5%;
+	width: 33%;
+	overflow: hidden;
+	position: relative;
+}
+
+ul.productList li:nth-child(2) {
+	margin-right: 0px;
+	width: 66.5%;
+}
+
+ul.productList li:nth-child(3), ul.productList li:nth-child(4), ul.productList li:nth-child(5) {
+	margin-left: 0px;
+	width: 33%;
+	margin-right: 0.5%;
+}
+
+ul.productList li:nth-child(5) {
+	margin-right: 0;
+}
+
+
+ul.productList li h5.title{
+	position: absolute;
+	bottom: 0;
+	padding: 5px 20px;
+}
+
+ul.productList li h5.price{
+	position: absolute;
+	bottom: 0;
+	right:0;
+	padding: 5px 20px;
+}

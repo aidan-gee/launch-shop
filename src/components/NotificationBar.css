@@ -1,0 +1,10 @@
+div.notification-bar {
+  background-color: #ef5350;
+}
+div.notification-bar h2 {
+  display: inline-block;
+}
+
+div.notification-bar span {
+  padding: 10px;
+}
