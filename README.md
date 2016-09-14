@@ -1,3 +1,20 @@
+# Launch Shop
+
+This project is designed to be used as a high traffic e-commerce application. More specifically
+for product launches and peak traffic. 
+
+## Features
+
+* Can be served via a CDN
+* Offline functionality to limit http requests
+* Apple pay web payments
+
+## Technologies
+
+* [React](https://github.com/facebook/react)
+* [React router](https://github.com/ReactTraining/react-router)
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.  
