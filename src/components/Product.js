@@ -1,6 +1,7 @@
 import React from 'react';
 import initialState from '../services/initialData';
 import {startApplePaySession} from '../services/applePay';
+import {startWebPay} from '../services/webPay';
 import SimpleButton from './SimpleButton';
 
 function getProductById(id){
@@ -29,14 +30,21 @@ const Product = React.createClass({
     })
   },
   render(){
-    let applePayButton;
+    let applePayButton,
+        webPayButton;
+        
     if(true) {
       applePayButton = <SimpleButton className="applePay black" onClick={startApplePaySession}></SimpleButton>
     }
+    if(true){
+      webPayButton = <SimpleButton className="webPay black" onClick={startWebPay}></SimpleButton>
+    }
+    
     return  (
       <div className="Product">
         <h1>{this.state.product.title}</h1>
         {applePayButton}
+        {webPayButton}
         <SimpleButton className="buyNow black">Buy now</SimpleButton>
       </div>
     );
