@@ -6,14 +6,14 @@ ul.productList {
 
 ul.productList li {
 	display: inline-block;
-	margin-right: 0.5%;
+	margin-right: 0%;
 	width: 33%;
 	overflow: hidden;
 	position: relative;
 }
 
-ul.productList li:nth-child(2) {
-	margin-right: 0px;
+ul.productList li:first-child {
+	margin-right: 0.5%;
 	width: 66.5%;
 }
 
@@ -40,3 +40,40 @@ ul.productList li h5.price{
 	right:0;
 	padding: 5px 20px;
 }
+
+
+@media (max-width: 1200px) {
+	
+	ul.productList li {
+		margin-right: 0;
+		width: 49.5%;
+	}
+	
+	ul.productList li:first-child {
+		margin-right: 0%;
+		width: 100%;
+	}
+	
+	ul.productList li:nth-child(3), ul.productList li:nth-child(4), ul.productList li:nth-child(5) {
+		width: 49.5%;
+	}
+	
+	ul.productList li:nth-child(2) {
+		margin-right: 0.5%;
+	}
+	
+	ul.productList li:nth-child(3) {
+		margin-right: 0%;
+	}
+
+}
+
+@media (max-width: 600px) {
+
+	
+	ul.productList li {
+		width: 100% !important;
+	}
+
+}
+

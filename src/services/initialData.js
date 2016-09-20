@@ -4,23 +4,24 @@ const initialState = {
     message: "Notification message",
     countdownTime: "2016-09-11T21:00:00.000Z"
   },
-  products: [{
-    id: 1,
-    title: "product A",
-    image: 'https://placehold.it/650x550',
-    launch: '2016-09-08T21:00:00.000Z',
+  products: [
+  {
+    id: 2,
+    title: "product B",
+    image: 'https://placehold.it/1450x450',
+    launch: '2016-09-09T21:00:00.000Z',
     price: {
-      amount: '55.00',
+      amount: '45.00',
       currency: 'GBP'
     }
   },
   {
-    id: 2,
-    title: "product B",
-    image: 'https://placehold.it/1450x550',
-    launch: '2016-09-09T21:00:00.000Z',
+    id: 1,
+    title: "product A",
+    image: 'https://placehold.it/650x450',
+    launch: '2016-09-08T21:00:00.000Z',
     price: {
-      amount: '45.00',
+      amount: '55.00',
       currency: 'GBP'
     }
   },
