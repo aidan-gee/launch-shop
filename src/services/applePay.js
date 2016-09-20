@@ -1,4 +1,4 @@
-const APPLE_PAY_SUPPORTED = window.ApplePaySession ? true : false;
+export const APPLE_PAY_SUPPORTED = window.ApplePaySession ? true : false;
 export const MERCHANT_IDENTIFIER = 'example.com.store';
 
 export function canMakePaymentsWithActiveCard(){

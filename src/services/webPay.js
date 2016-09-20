@@ -1,4 +1,4 @@
-const WEB_PAY_SUPPORTED = window.PaymentRequest ? true : false;
+export const WEB_PAY_SUPPORTED = window.PaymentRequest ? true : false;
 
 // Supported payment methods
 const supportedInstruments = [{

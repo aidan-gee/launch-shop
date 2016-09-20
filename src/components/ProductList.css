@@ -70,7 +70,6 @@ ul.productList li h5.price{
 
 @media (max-width: 600px) {
 
-	
 	ul.productList li {
 		width: 100% !important;
 	}
