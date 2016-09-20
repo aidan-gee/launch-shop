@@ -37,7 +37,7 @@ const createShippingOption = ( id, label, amount, selected = false ) => {
     id,
     label,
     amount: {currency: 'GBP', value: amount},
-    selected: true
+    selected
   }
 }
 
@@ -47,10 +47,11 @@ const createShippingOption = ( id, label, amount, selected = false ) => {
  * @description returns an array of shipping options 
  * note: These methods would usually be returned from the server
  */
-const createShippingOptions = ( ) => {
+const createShippingOptions = () => {
   let shippingOptions = [];
-  shippingOptions.push(createShippingOption('123456', 'Standard Delivery', 3.99));
-  shippingOptions.push(createShippingOption('123456', 'Next Day Delivery', 5.99, true));
+  shippingOptions.push(createShippingOption('123456', 'Standard Delivery', 3.99, true));
+  shippingOptions.push(createShippingOption('123455', 'Next Day Delivery', 5.99));
+  return shippingOptions;
 }
 
 
@@ -61,21 +62,55 @@ const createShippingOptions = ( ) => {
  */
 const onShippingAddressChange = (e) => {
   console.log(e);
-  e.updateWith(() => {
-    let shippinOptions = createShippingOptions();
-    details.shippinOptions = shippinOptions;
-    console.log(details);
+  e.updateWith(((details) => {
+    details.shippingOptions = createShippingOptions();
+    details.total.amount.value = +details.total.amount.value + +details.shippingOptions[0].amount.value;
     return Promise.resolve(details);
-  });
+  })(details));
 };
 
+const selectShippingOptionByID = (id) => {
+  let shippingOptions = createShippingOptions();
+  shippingOptions.forEach(function(element, i) {
+    if(element.id === id){
+      element.selected = true;
+    }else{
+      element.selected = false;
+    }
+  }, this);
+  return shippingOptions;
+}
+
+const getSelectedOptionByID = (id, shippingOptions) => {
+  let selectedOption = {};
+  shippingOptions.forEach(function(element, i) {
+    console.log(element.selected)
+    if(element.selected){
+     selectedOption = element;
+    }
+  }, this);
+  
+  return selectedOption;
+
+}
 /**
  * onShippingOptionChange
  * 
  * @description callback from web payment request when shipping options is changed
  */
 const onShippingOptionChange = (e) => {
-  e.updateWith(createShippingOptions());
+  console.log(e);
+  e.updateWith(((details) => {
+    let shippingOptions = selectShippingOptionByID(e.currentTarget.shippingOption);
+    let selectedOption = getSelectedOptionByID(e.currentTarget.shippingOption, shippingOptions);
+    
+    details.shippingOptions = shippingOptions;
+    console.log(details.total.amount.value);
+    console.log(selectedOption.amount.value);
+    details.total.amount.value = parseFloat(details.total.amount.value) + parseFloat(selectedOption.amount.value);
+    details.total.amount.value = details.total.amount.value.toFixed(2);
+    return Promise.resolve(details);
+  })(details));
 };
 
 
@@ -85,9 +120,7 @@ const onShippingOptionChange = (e) => {
 export function startWebPay(supportedCards, lines = details, options = OPTIONS){
   alert(WEB_PAY_SUPPORTED);
   if(!WEB_PAY_SUPPORTED) return;
-    console.log(supportedInstruments);
-    console.log(lines);
-    console.log(options);
+   
    let request = new PaymentRequest(supportedInstruments, lines, OPTIONS);
    
    // When user enters their address
