@@ -7,7 +7,8 @@ for product launches and peak traffic.
 
 * Can be served via a CDN
 * Offline functionality to limit http requests
-* Apple pay web payments
+* Apple pay web payment
+* Android pay web payment
 
 ## Technologies
 
