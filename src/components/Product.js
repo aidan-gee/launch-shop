@@ -3,6 +3,7 @@ import initialState from '../services/initialData';
 import {startApplePaySession, APPLE_PAY_SUPPORTED} from '../services/applePay';
 import {startWebPay, WEB_PAY_SUPPORTED} from '../services/webPay';
 import SimpleButton from './SimpleButton';
+import './Product.css';
 
 function getProductById(id){
   let product;
@@ -34,7 +35,7 @@ const Product = React.createClass({
     return  (
       <div className="Product">
         <h1>{this.state.product.title}</h1>
-        <SimpleButton className="applePay black" onClick={startApplePaySession} show={APPLE_PAY_SUPPORTED}></SimpleButton>
+        <SimpleButton className="apple-pay-button apple-pay-button-black" onClick={startApplePaySession} show={APPLE_PAY_SUPPORTED}></SimpleButton>
         <SimpleButton className="webPay black" onClick={startWebPay} show={WEB_PAY_SUPPORTED}></SimpleButton>
       </div>
     );
