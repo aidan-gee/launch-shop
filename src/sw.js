@@ -15,11 +15,22 @@
 
 // Incrementing CACHE_VERSION will kick off the install event and force previously cached
 // resources to be cached again.
-const CACHE_VERSION = 1;
+const CACHE_VERSION = 2;
 let CURRENT_CACHES = {
   offline: 'offline-v' + CACHE_VERSION
 };
-const OFFLINE_URL = 'offline.html';
+
+
+// Files required to make this app work offline
+var REQUIRED_FILES = [
+ 
+  '/static/js/bundle.js',
+  'style.css',
+  '/', // Separate URL than index.html!
+  'payment-shim.js',
+  'https://placehold.it/1450x450',
+  'https://placehold.it/650x450'
+];
 
 function createCacheBustedRequest(url) {
   let request = new Request(url, {cache: 'reload'});
@@ -36,15 +47,18 @@ function createCacheBustedRequest(url) {
   return new Request(bustedUrl);
 }
 
-self.addEventListener('install', event => {
+self.addEventListener('install', function(event) {
+  // Perform install step:  loading each required file into cache
   event.waitUntil(
-    // We can't use cache.add() here, since we want OFFLINE_URL to be the cache key, but
-    // the actual URL we end up requesting might include a cache-busting parameter.
-    fetch(createCacheBustedRequest(OFFLINE_URL)).then(function(response) {
-      return caches.open(CURRENT_CACHES.offline).then(function(cache) {
-        return cache.put(OFFLINE_URL, response);
-      });
-    })
+    caches.open(CURRENT_CACHES.offline)
+      .then(function(cache) {
+        // Add all offline dependencies to the cache
+        return cache.addAll(REQUIRED_FILES);
+      })
+      .then(function() {
+      	// At this point everything has been cached
+        return self.skipWaiting();
+      })
   );
 });
 
@@ -72,31 +86,21 @@ self.addEventListener('activate', event => {
   );
 });
 
-self.addEventListener('fetch', event => {
-  // We only want to call event.respondWith() if this is a navigation request
-  // for an HTML page.
-  // request.mode of 'navigate' is unfortunately not supported in Chrome
-  // versions older than 49, so we need to include a less precise fallback,
-  // which checks for a GET request with an Accept: text/html header.
-  if (event.request.mode === 'navigate' ||
-      (event.request.method === 'GET' &&
-       event.request.headers.get('accept').includes('text/html'))) {
-    console.log('Handling fetch event for', event.request.url);
-    event.respondWith(
-      fetch(event.request).catch(error => {
-        // The catch is only triggered if fetch() throws an exception, which will most likely
-        // happen due to the server being unreachable.
-        // If fetch() returns a valid HTTP response with an response code in the 4xx or 5xx
-        // range, the catch() will NOT be called. If you need custom handling for 4xx or 5xx
-        // errors, see https://github.com/GoogleChrome/samples/tree/gh-pages/service-worker/fallback-response
-        console.log('Fetch failed; returning offline page instead.', error);
-        return caches.match(OFFLINE_URL);
-      })
-    );
-  }
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.match(event.request)
+      .then(function(response) {
+        // Cache hit - return the response from the cached version
+        if (response) {
+          console.log('Cache hit !!!!', event.request);
+          return response;
+        }
 
-  // If our if() condition is false, then this fetch handler won't intercept the request.
-  // If there are any other fetch handlers registered, they will get a chance to call
-  // event.respondWith(). If no fetch handlers call event.respondWith(), the request will be
-  // handled by the browser as if there were no service worker involvement.
+        // Not in cache - return the result from the live server
+        // `fetch` is essentially a "fallback"
+        console.log('Falling back to http request', event.request);
+        return fetch(event.request);
+      }
+    )
+  );
 });

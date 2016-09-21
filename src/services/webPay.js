@@ -121,7 +121,7 @@ export function startWebPay(supportedCards, lines = details, options = OPTIONS){
   alert(WEB_PAY_SUPPORTED);
   if(!WEB_PAY_SUPPORTED) return;
    
-   let request = new PaymentRequest(supportedInstruments, lines, OPTIONS);
+   let request = new window.PaymentRequest(supportedInstruments, lines, OPTIONS);
    
    // When user enters their address
    request.addEventListener('shippingaddresschange', onShippingAddressChange);
@@ -145,6 +145,8 @@ export function startWebPay(supportedCards, lines = details, options = OPTIONS){
         // buyer's email address string
         email: result.payerEmail
       };
+      
+      console.log(paymentData);
     
       // POST the payment information to the server
       return fetch('/pay', {
@@ -153,7 +155,7 @@ export function startWebPay(supportedCards, lines = details, options = OPTIONS){
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(paymentData)
       }).then(response => {
         // Examine server response
         if (response.status === 200) {
