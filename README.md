@@ -9,6 +9,7 @@ for product launches and peak traffic.
 * Offline functionality to limit http requests
 * Apple pay web payment
 * Android pay web payment
+* ReCaptcha 
 
 ## Technologies
 
