@@ -1,11 +1,28 @@
 export const WEB_PAY_SUPPORTED = window.PaymentRequest ? true : false;
+const ANDROID_PAY = 'https://android.com/pay';
 
 // Supported payment methods
 const supportedInstruments = [{
   supportedMethods: [
     'visa', 'mastercard', 'amex', 'discover'
-  ]
-}];
+  ]},
+  {
+    supportedMethods: [ANDROID_PAY],
+    data: {
+      //merchant ID obtained from Google that maps to your origin
+      merchantId: '123456789101112131415',
+      environment: 'TEST',
+      allowedCardNetworks: ['AMEX', 'MASTERCARD', 'VISA', 'DISCOVER'],
+      paymentMethodTokenizationParameters: {
+        tokenizationType: 'NETWORK_TOKEN',
+        parameters: {
+          //public key to encrypt response from Android Pay
+          'publicKey': ''
+        }
+      }
+    }
+  }
+];
 
 // Checkout details
 const details = {
@@ -118,7 +135,7 @@ const onShippingOptionChange = (e) => {
  * startWebPay
  */
 export function startWebPay(supportedCards, lines = details, options = OPTIONS){
-  alert(WEB_PAY_SUPPORTED);
+  
   if(!WEB_PAY_SUPPORTED) return;
    
    let request = new window.PaymentRequest(supportedInstruments, lines, OPTIONS);
