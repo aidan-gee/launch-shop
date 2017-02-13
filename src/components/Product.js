@@ -3,6 +3,7 @@ import initialState from '../services/initialData';
 import {startApplePaySession, APPLE_PAY_SUPPORTED} from '../services/applePay';
 import {startWebPay, WEB_PAY_SUPPORTED} from '../services/webPay';
 import SimpleButton from './SimpleButton';
+import Gallery from './productGallery';
 import './Product.css';
 
 function getProductById(id){
@@ -31,10 +32,11 @@ const Product = React.createClass({
     })
   },
   render(){
-    
+    console.log(this.state.product);
     return  (
       <div className="Product">
         <h1>{this.state.product.title}</h1>
+        <Gallery initialImages={this.state.product.images}/>
         <SimpleButton className="apple-pay-button apple-pay-button-black" onClick={startApplePaySession} show={APPLE_PAY_SUPPORTED}></SimpleButton>
         <SimpleButton className="webPay black" onClick={startWebPay} show={WEB_PAY_SUPPORTED}></SimpleButton>
       </div>

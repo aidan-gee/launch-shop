@@ -47,6 +47,7 @@ function createCacheBustedRequest(url) {
   return new Request(bustedUrl);
 }
 
+
 self.addEventListener('install', function(event) {
   // Perform install step:  loading each required file into cache
   event.waitUntil(
@@ -69,6 +70,13 @@ self.addEventListener('activate', event => {
   let expectedCacheNames = Object.keys(CURRENT_CACHES).map(function(key) {
     return CURRENT_CACHES[key];
   });
+  
+  //fallback to cache when cache hs expired
+  // event.respondWith(
+  //   fetch(event.request).catch(function() {
+  //     return caches.match(event.request);
+  //   })
+  // );
 
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -90,9 +98,16 @@ self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request)
       .then(function(response) {
+        
         // Cache hit - return the response from the cached version
         if (response) {
           console.log('Cache hit !!!!', event.request);
+          let time = new Date();
+          let timeRequested = new Date(response.headers.getAll('date'));
+          var diffMs = (+time - +timeRequested);
+          console.log(diffMs);
+          var diffMins = Math.floor((diffMs/1000)/60);
+          console.log(diffMins);
           return response;
         }
 

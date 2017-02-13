@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const SimpleButton = ({onClick, children, className, show}) => {
+const SimpleButton = ({onClick, children, className, show = true}) => {
  
 	return (
 	   <button onClick={onClick} className={className} style={{display: show ? 'block' : 'none'}}>
@@ -10,7 +10,9 @@ const SimpleButton = ({onClick, children, className, show}) => {
 };
 
 SimpleButton.propTypes = {
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    className: PropTypes.string,
+    show: PropTypes.bool
 }
 
 export default SimpleButton;

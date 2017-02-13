@@ -2,10 +2,10 @@ export const WEB_PAY_SUPPORTED = window.PaymentRequest ? true : false;
 const ANDROID_PAY = 'https://android.com/pay';
 
 // Supported payment methods
-const supportedInstruments = [{
-  supportedMethods: [
-    'visa', 'mastercard', 'amex', 'discover'
-  ]},
+const supportedInstruments = [
+  {
+    supportedMethods: ['visa', 'mastercard', 'amex', 'discover']
+  },
   {
     supportedMethods: [ANDROID_PAY],
     data: {
@@ -163,7 +163,7 @@ export function startWebPay(supportedCards, lines = details, options = OPTIONS){
         email: result.payerEmail
       };
       
-      console.log(paymentData);
+      alert(paymentData);
     
       // POST the payment information to the server
       return fetch('/pay', {

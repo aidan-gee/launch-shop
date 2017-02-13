@@ -11,8 +11,8 @@ if ('serviceWorker' in navigator) {
   
   const register = require("serviceworker!./sw.js");
   register({ scope: '/' })
-    .then(() => console.log('It worked!'))
-    .catch(err => console.log('It didnt work!', err));
+    .then(() => console.log('Service worker installed'))
+    .catch(err => console.log('Could not install service worker', err));
     
 }
 

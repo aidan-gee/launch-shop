@@ -13,7 +13,21 @@ const initialState = {
     price: {
       amount: '45.00',
       currency: 'GBP'
-    }
+    },
+    images: [
+      {
+        src: 'https://placehold.it/450x650',
+        alt: 'alt stuff'
+      },
+      {
+        src: 'https://placehold.it/450x650',
+        alt: 'alt stuff'
+      },
+      {
+        src: 'https://placehold.it/450x650',
+        alt: 'alt stuff'
+      }
+    ]
   },
   {
     id: 1,
